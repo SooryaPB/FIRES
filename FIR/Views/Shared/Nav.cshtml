@@ -1,0 +1,102 @@
+﻿
+
+  @ViewBag.RoleName;
+  @if (ViewBag.RoleName == "ADMIN")
+  {
+    <aside id="left-panel">
+        <nav>
+            <ul>
+                <li class="active">
+                    <a href='#' onclick="loadContent('/Home/DashView')"><i class="fa fa-lg fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                </li>
+                <li id="admindiv">
+                    <a href="#"><i class="fa fa-user fa-lg"></i> <span class="menu-item-parent">User Administration</span></a>
+                    <ul>
+                        <li>
+                            <a href="#" onclick="loadContent('/Home/RolesManagement');">Roles Management</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadContent('/Home/Impersonate');">Impersonate User</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="#"><i class="fa fa-slideshare fa-lg"></i> <span class="menu-item-parent">&nbsp;Report Administration</span></a>
+                    <ul>
+                        <li>
+                            <a href="#" id="datasource" onclick="loadContent('/Home/Datasources');">Datasource</a>
+                        </li>
+                        <li>
+                            <a href="#" id="datasource_access" onclick="loadContent('/Home/DatasourceAccess');">Datasources Access</a>
+                        </li>
+                        <li>
+                            <a href="#" id="report_categories" onclick="loadContent('/Home/ReportCategories');">Report Categories</a>
+                        </li>
+                        <li>
+                            <a href="#" id="report_access" onclick="loadContent('/Home/ReportAccess');">Report Accesss</a>
+                        </li>
+                        <li>
+                            <a href="#" id="report_access" onclick="loadContent('/Home/DatabaseSource');">Database Source</a>
+                        </li> 
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa fa-cog fa-lg"></i> <span class="menu-item-parent">&nbsp;Help Settings</span></a>
+                    <ul>
+                        <li>
+                            <a href="#" id="add_help" onclick="loadContent('/Home/HelpHeading');">Add Topics/Content</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-tty fa-lg"></i> <span class="menu-item-parent">Help</span></a>
+                    <ul>
+                        <li>
+                            <a href="#" id="user_manual" onclick="loadContent('/Home/UserManual');">User manual</a>
+                        </li>
+                        <li>
+                            <a href="#" id="ContactListLink" onclick="loadContent('/Home/Contact');">Contact</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+
+  }
+
+  else
+  {
+
+    <aside id="left-panel">
+
+        <nav>
+
+            <ul>
+                <li class="active">
+                    <a href='#' onclick="loadContent('/Home/DashView')"> <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                </li>
+                            
+                <li>
+                    <a href="#"><i class="fa fa-tty fa-lg"></i> <span class="menu-item-parent">Help</span></a>
+                    <ul>
+                        <li>
+                            <a href="#" id="user_manual" onclick="loadContent('/Home/UserManual');">User manual</a>
+                        </li>
+                        <li>
+                            <a href="#" id="ContactListLink" onclick="loadContent('/Home/Contact');">Contact</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+    </aside>
+
+
+  }

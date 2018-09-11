@@ -1,0 +1,76 @@
+﻿ .grid-text { 
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    }
+     .ui-jqgrid tr.ui-row-ltr td { 
+         border-bottom-style: solid !important; 
+         border-right-style: solid !important;
+         border-bottom-width: thin !important; 
+         border-right-width: thin !important; 
+         border-bottom-color: #cccccc !important;
+         border-right-color: #cccccc !important;
+     }
+
+    .ui-jqgrid tr.ui-row-ltr td {
+        padding: 0px 5px !important;
+        font-size: 13px !important;
+    }
+
+    .ui-widget-header {
+        border: none;
+        background: none;
+        color: #FFFFFF;
+        font-weight: normal;
+    }
+
+    .ui-jqgrid .ui-jqgrid-title {
+        font-size: 15px;
+        color: #FFFFFF;
+    }
+
+.ui-jqgrid .ui-jqgrid-titlebar {
+    padding: 5px 5px;
+    position: relative;
+    font-size: 12px;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-top: 0 none;
+    background-color: #FFFFFF;
+    background-image: -moz-linear-gradient(top,#FFFFFF,#FFFFFF);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#FFFFFF),to(#FFFFFF));
+    background-image: -webkit-linear-gradient(top,#FFFFFF,#FFFFFF);
+    background-image: -o-linear-gradient(top,#FFFFFF,#FFFFFF);
+    background-image: linear-gradient(to bottom,#CCC,#CCC);
+    background-repeat: repeat-x;
+}
+.ui-jqgrid .ui-jqgrid-bdiv {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    text-align: left;
+}
+    .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+        border: 1px solid #FFFFFF;
+        background: none !important;
+        color: #363636;
+    }
+ .ui-jqgrid tr.jqgrow td {
+    word-wrap: break-word; /* IE 5.5+ and CSS3 */
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    overflow: hidden;
+    height: auto;
+    vertical-align: middle;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+ #progress-bar {
+    width: 0;
+    background: #CCC;
+    text-align: center;
+    overflow: hidden;   
+}

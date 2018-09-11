@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title> ENVHR </title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("~/Views/Shared/includes.cshtml")
+
+    
+</head>
+<body style="background-color:#FFFFFF !important">
+    <header id="header">
+        @Html.Partial("~/Views/Shared/Header.cshtml")
+    </header>
+    @Html.Partial("~/Views/Shared/Nav.cshtml")
+    <div id="body">
+        <div id="main" role="main">
+            @Html.Partial("~/Views/Shared/Ribbon.cshtml")
+            <div id="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>
+
+
+
+
+

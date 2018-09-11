@@ -1,0 +1,1039 @@
+﻿@{
+    Layout = null; 
+} 
+<style>
+    .jqgrid_ddl {
+        height: 21px !important;
+        width: 100% !important;
+    }
+.ui-jqgrid tr.ui-row-ltr td {
+    border-bottom-style: none !important;
+    border-right-style: none !important;
+    border-left-style: none !important;
+    border-top-style: none !important;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #333333;
+    background-color: #ffffff;
+    font-weight: normal;
+    border: 0px solid #cccccc; 
+}
+.ui-jqgrid {
+    position: relative;
+    border: 0px solid #ccc!important;
+    margin: 0;
+    overflow: hidden;
+} 
+</style>
+<section id="widget-grid" class="">  
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+                <header>
+                    <span class="widget-icon"><i class="fa fa-slideshare"></i></span>
+                    <h2 id="reportlistheading"></h2>
+                </header>
+                <div>
+                    <div class="jarviswidget-editbox">
+                    </div>
+                    <div class="widget-body no-padding">
+                        <div class="row">
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <table id="jqgrid_dashboard" style="border: none !important"></table>
+                                <div id="pjqgrid_dashboard"></div>
+                            </article>
+                        </div>
+                        <div class="row" id="filter_div">
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <table id="jqgrid_filter" style="border: none !important"></table>
+                                <div id="pjqjqgrid_filter"></div>
+                            </article>
+                        </div>
+                        <div class="row" style="width: 100% !important" id="param_widget">
+                            <article class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-fullscreenbutton="false" style="padding-left: 10px !important">
+                                    <header style="margin-top: 10px">
+                                        <span class="widget-icon"><i class="fa fa-search"></i></span>
+                                        <h2 id="param_header">Search Parameters</h2>
+                                    </header>
+                                    <div style="width: 100% !important" class="no-padding">
+                                        <div class="widget-body" style="height: auto !important;">
+                                            <table id="jqgrid_param" style="width: 100% !important;"></table>
+                                            <div id="pjqgrid_param"></div>
+                                            <div class="row" style="text-align: center !important; padding-top: 10px !important">
+                                                <button type="button" id="report_go_btn" name="report_go_btn" class="btn btn-default"
+                                                        style="margin: 0 auto; height: 32px !important; width: 100px !important;">Go</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="row" style="width: 100% !important" id="param_widget_graph">
+                            <article class="col-sm-6 col-md-6 col-lg-6">
+                                <div class="jarviswidget jarviswidget-color-blueDark" data-widget-editbutton="false" data-widget-fullscreenbutton="false" style="padding-left: 10px !important">
+                                    <header style="margin-top: 10px">
+                                        <span class="widget-icon"><i class="fa fa-search"></i></span>
+                                        <h2 id="param_header_graph">Search Parameters</h2>
+                                    </header>
+                                    <div style="width: 100% !important" class="no-padding">
+                                        <div class="widget-body" style="height: auto !important;">
+                                            <table id="jqgrid_param_graph" style="width: 100% !important;"></table>
+                                            <div id="pjqgrid_param_graph"></div>
+                                            <div class="row" style="text-align: center !important; padding-top: 10px !important">
+                                                <button type="button" id="report_go_btn_chart" name="report_go_btn_chart" class="btn btn-default"
+                                                        style="margin: 0 auto; height: 32px !important; width: 100px !important;">
+                                                    Go
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <div class="row" id="progress_bar_div" style="width: 100% !important; margin-top: 5px !important">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+            <div id="pbar_outerdiv" style="width: 100% !important; height: 20px; border: 1px solid grey; z-index: 1; position: relative; border-radius: 0px; -moz-border-radius: 0px;">
+                <div id="pbar_innerdiv" style="background-color: rgb(125, 194, 125); z-index: 2; height: 100%; width: 0%;"></div>
+                <div id="pbar_innertext" style="z-index: 3; position: absolute; top: 0; left: 0; width: 100%; height: 100%; color: black; font-weight: bold; text-align: center;">0%</div>
+            </div>
+        </article>
+    </div>
+    <div class="row">
+        <article id="report_widget_div" class="col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget" data-widget-editbutton="false" data-widget-fullscreenbutton="false" id="report_widget" style="width: 100% !important; margin-top: 5px !important">
+                <header style="margin-top: 10px">
+                    <span class="widget-icon"></span>
+                    <h2 id="report_heading"></h2> 
+                </header>
+                <div class="widget-body" id="report_widget_body" style="width: 100% !important; margin-top: 0px !important"> 
+                    <iframe id="report_viewer" style="width: 100% !important;height:1200px !important;border:0px !important;"/>
+                </div>
+            </div>
+        </article>
+    </div>  
+        <div class="row">
+            <article id="report_widget_div_graph" class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget"  data-widget-editbutton="false" id="graph_dashboard_div"  style="width: auto !important;height: auto!important">
+                    <header>
+                        <span class="widget-icon">
+                            <i class="fa fa-bar-chart-o"></i>
+                        </span>
+                        <h2 id="param_yard_name"></h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div id="bar-graph" class="chart no-padding" style="width: 100% !important; overflow: auto; height: auto !important;"></div>
+                        </div>
+                    </div>
+                </div>
+              </article>         
+        </div>  
+</section>  
+    <script>
+    var json_subgrid = {}, jObject = {}, param_array = [], param_object = {};
+    var query_string = "", param_grid_rowid;
+    function get_report_data() {
+
+        query_string = '';
+        where_condition = "";
+        //construct the where condition from the parameter grid
+        if (jObject.ParamCount != 0) {
+            var rowdata = $("#jqgrid_param").jqGrid('getGridParam', 'data');
+            where_condition = " WHERE ";
+            for (var j = 0; j < rowdata.length; j++) {
+                var value_text = "";
+                var quote_text = "";
+                var space = " ";
+                var condition = "";
+                if (query_string == '')
+                    query_string = '&ReportGuid=' + rowdata[j].report_guid;
+                if (rowdata[j].condition != "NA")
+                    condition = rowdata[j].condition;
+                if (rowdata[j].field_type == "smalldatetime" || rowdata[j].field_type == "datetime" ||
+                    rowdata[j].field_type == "nvarchar" || rowdata[j].field_type == "varchar")
+                    quote_text = "'";
+                if (rowdata[j].field_type == "numeric" ||
+                    rowdata[j].field_type == "int" || rowdata[j].field_type == "bit" || rowdata[j].field_type == "money")
+                    quote_text = " ";
+                if (rowdata[j].control == "text" || rowdata[j].control == "date" || rowdata[j].control == "autocomplete")
+                    value_text = $('#' + (j + 1) + '_control').val();
+                if (rowdata[j].control == "checkbox") {
+                    data = rowdata[j].value_text;
+                    var array = data.split('/');
+                    if ($('#' + (j + 1) + '_control').is(':checked')) {
+                        var value_text = array[0];
+                    }
+                    else {
+                        var value_text = array[1];
+                    };
+                }
+                try {
+                    if (rowdata[j].control == "select") {
+                        var ddl_control = document.getElementsByName(j.toString() + '_control');
+                        value_text = $(ddl_control).val();
+                    }
+                    if (rowdata[j].control == "select-param") {
+
+                        var ddl_control = document.getElementsByName(j.toString() + '_control');
+                        value_text = $(ddl_control).val();
+                    }
+                    if (rowdata[j].control == "text" || rowdata[j].control == "date" || rowdata[j].control == "datetime"
+                        || rowdata[j].control == "autocomplete" || rowdata[j].control == "date-param") {
+                        var ddl_control = document.getElementsByName(j.toString() + '_control');
+                        value_text = $(ddl_control).val();
+                    }
+                } catch (err) {
+                }
+                if (rowdata[j].control == "text") {
+                    if (value_text == "")
+                        value_text = rowdata[j].value_text;
+                }
+                if (value_text == "" && rowdata[j].mandatory == "True") {
+
+                    ShowErrorMessage('Please enter the mandatory field', rowdata[j].filter_caption);
+                    return false;
+                }
+                if (value_text != '') {
+                    if (rowdata[j].operator == 'LIKE') value_text = '%' + value_text + '%'
+                    where_condition = where_condition + rowdata[j].filter_column +
+                    space + rowdata[j].operator + space + quote_text + value_text + quote_text + space + condition + space;
+                }
+                if (rowdata[j].control == "date" || rowdata[j].control == "datetime") {
+                    if (value_text == "")
+                        value_text = rowdata[j].value_text;
+                }
+
+                if (rowdata[j].control == "NA") {
+                    if (value_text == "")
+                        value_text = rowdata[j].value_text;
+                }
+                query_string = query_string + '&' + rowdata[j].filter_column + '=' + value_text;
+            }
+            if (where_condition.trim() == "WHERE")
+                where_condition = "";
+            if (where_condition != "") {
+                where_condition = where_condition.trim();
+                last_index = where_condition.lastIndexOf(" ");
+                last_verb = where_condition.substring(last_index + 1, where_condition.length);
+                if (last_verb == "OR" || last_verb == "AND") {
+                    last_index = where_condition.lastIndexOf(last_verb);
+                    where_condition = where_condition.substring(0, last_index);
+                }
+            }
+        }
+        else {
+            init_progress_bar();
+            query_string = '?Token=' + '@Convert.ToString(Session["Token"])' + '&ReportGuid=' + jObject.ReportGuid;
+            $('#report_viewer').attr('src', g_app_name + '/ReportViewer.aspx' + query_string);
+        }
+    }
+        function get_report_data_for_graph() {
+
+            var json = {};
+            query_string_graph = '';
+            query_string_year = '';
+            document.getElementById('bar-graph').innerHTML = "";
+            //construct the where condition from the parameter grid
+            if (jObject.ParamCount != 0) {
+                debugger;
+                var rowdata = $("#jqgrid_param_graph").jqGrid('getGridParam', 'data');
+                for (var j = 0; j < rowdata.length; j++) {
+                    var value_text = "";
+                    if (rowdata[j].control == "select") {
+                        var ddl_control_graph = document.getElementsByName(j.toString() + '_control');
+                        query_string_graph = $('#' + rowdata[j].id + '_' + j + '_control').val();
+                    }
+                    if (rowdata[j].control == "text" || rowdata[j].control == "date" || rowdata[j].control == "autocomplete")
+                        query_string_year = $('#' + rowdata[j].id + '_' + j + '_control').val();
+                }
+            }
+            json["SelectVal"] = query_string_graph;
+            json["YearVal"] = query_string_year;
+            if (query_string_graph == 'Branch' ||query_string_graph == 'Yard')
+            {
+                $.ajax({
+                    async: true,
+                    url: g_app_name + '/api/GetGraphforYard',
+                    type: 'POST',
+                    data: JSON.stringify(json),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        if (data.rows.length > 0) {
+
+                            var data_pie = [];
+                            for (var i = 0; i < data.rows.length; i++) {
+                                data_pie[i] = {
+                                    x: data.rows[i].Name,
+                                    y: data.rows[i].Total,
+                                }
+                            }
+                            $('#param_yard_name').html('Number Of Employee Details by' +' '+query_string_graph);
+                            $('#graph_dashboard_div').show();
+                            Morris.Bar({
+                                element: 'bar-graph',
+                                data:data_pie,
+                                xkey: 'x',
+                                ykeys: ['y'],
+                                labels: ['Total'],
+                                xLabelsDiagonal: true,
+                              //  gridTextSize: 10,
+                                barColors: function (row, series, type) {
+                                    if (type === 'bar') {
+                                        var red = Math.ceil(150 * row.y / this.ymax);
+                                        return 'rgb(' + red + ',0,0)';
+                                    }
+                                    else {
+                                        return '#000';
+                                    }
+                                },
+                            });
+                            $('svg').height(500);
+                        }
+                        else {
+                            $('#graph_dashboard_div').hide();
+                            ShowErrorMessage('No Record Found', '0! records');
+                            return;
+                        }
+                    },
+                });
+            }
+            else
+            {
+            $.ajax({
+                async: true,
+                url: g_app_name + '/api/GetDataForGraph',
+                type: 'POST',
+                data: JSON.stringify(json),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+
+                    if (data.rows.length > 0)
+                    {
+
+                        $('#param_yard_name').html(data.rows[0].Year+' '+"Injuries Count by Month -" + data.rows[0].YardName);
+                        $('#graph_dashboard_div').show();
+                        Morris.Bar({
+                            element: 'bar-graph',
+                            data: [
+                          { x: 'Jan', y: data.rows[0].January },
+                          { x: 'Feb', y: data.rows[0].February },
+                          { x: 'Mar', y: data.rows[0].March },
+                          { x: 'Apr', y: data.rows[0].April },
+                          { x: 'May', y: data.rows[0].May },
+                          { x: 'Jun', y: data.rows[0].June },
+                          { x: 'Jul', y: data.rows[0].July },
+                          { x: 'Aug', y: data.rows[0].August },
+                          { x: 'Sep', y: data.rows[0].September },
+                          { x: 'Oct', y: data.rows[0].October },
+                          { x: 'Nov', y: data.rows[0].November },
+                          { x: 'Dec', y: data.rows[0].December }
+                            ],
+                            xkey: 'x',
+                            ykeys: ['y'],
+                            labels: ['Total Injuries'],
+                            barColors: function (row, series, type) {
+                                if (type === 'bar') {
+                                    var red = Math.ceil(150 * row.y / this.ymax);
+                                    return 'rgb(' + red + ',0,0)';
+                                }
+                                else {
+                                    return '#000';
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $('#graph_dashboard_div').hide();
+                        ShowErrorMessage('No Record Found', '0! records');
+                        return;
+                    }
+                },
+            });
+        }
+        }
+        $(document).ready(function (e) {
+            $('#jqgrid_param').keypress(function (e) {
+                debugger;
+                if (e.which == 13) {
+                    $('#jqgrid_param').editRow(param_grid_rowid);
+                }
+            });
+        pageSetUp();
+        pageHeading("Report Dashboard");
+        $('#reportlistheading').text("Report List");
+
+        hide('param_widget');
+        $('#graph_dashboard_div').hide();
+        hide('progress_bar_div');
+        hide('report_widget_div');
+        get_dashboard_grid_data();
+        hide('param_widget_graph');
+        $('.ui-icon ui-icon-circle-triangle-w').html("<<");
+        $('#report_go_btn').click(function () {
+            if (get_report_data() == false) {
+                return;
+            }
+            else {
+                init_progress_bar();
+                query_string = '?Token=' + '@Convert.ToString(Session["Token"])' + query_string;
+                $('#report_viewer').attr('src', g_app_name + '/ReportViewer.aspx' + query_string);
+            }
+        });
+        $('#report_go_btn_chart').click(function () {
+            get_report_data_for_graph();
+        });
+        $('#report_viewer').on('load', function () {
+            stop_watch = setTimeout(function () {
+                if ($('#CrViewer__UI') != undefined) {
+                    stop_progress_bar();
+                    $('#report_widget_div').show();
+                    $('#report_widget').show();
+                    clearTimeout(stop_watch);
+                }
+            }, 500);
+        });
+    });
+    function get_dashboard_grid_data() {
+        var json = {};
+        json["Token"] = '@Convert.ToString(Session["Token"])';
+        $.ajax({
+            async: true,
+            url: g_app_name + '/api/GetReportCategory',
+            type: 'POST',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data != undefined) {
+                    create_dashboard_view_grid(data);
+                }
+            },
+            error: function (xhr) {
+            },
+            processData: false
+        });
+    }
+    function create_dashboard_view_grid(data) {
+        $('#jqgrid_dashboard').jqGrid('GridUnload');
+        jQuery("#jqgrid_dashboard").jqGrid({
+            datatype: 'json',
+            height: 'auto',
+            autowidth: true,
+            datatype: "local",
+            data: data.rows,
+            colNames: ['ID', ' '],
+            colModel: [
+                { name: 'ID', index: 'Id', hidden: true },
+                { name: 'TYPE_NAME', index: 'TYPE_NAME', align: "left", editable: false, width: 100 },
+            ],
+            rowNum: 10,
+            sortname: 'TypeName',
+            viewrecords: true,
+            sortorder: "asc",
+            subGrid: true,
+            multiselect: false,
+            subGridOptions: {
+                "plusicon": "ui-icon-plus",
+                "minusicon": "ui-icon-minus",
+                "openicon": "ui-icon-arrowreturn-1-e",
+                "reloadOnExpand": false,
+                "selectOnExpand": true
+            },
+            subGridBeforeExpand: function (subgridDivId, row_id) { },
+            subGridRowExpanded: function (subgrid_id, row_id) {
+                json_subgrid.subgrid_id = subgrid_id;
+                json_subgrid.row_id = row_id;
+                load_filter_subgrid(subgrid_id, row_id);
+            },
+            gridComplete: function () { },
+            loadError: function (xhr, st, err) {
+                ShowErrorMessage("Records search", "No records found matching the search !" + JSON.stringify(xhr));
+            },
+            loadComplete: function (data) {
+                $("#jqgrid_dashboard").jqGrid('setGridWidth', $("#gbox_jqgrid_dashboard").parent().width());
+            },
+            editurl: "",
+            autowidth: true,  //turn off to scroll
+        });
+        $('.ui-jqgrid-hdiv').hide();
+        $('#jqgrid_dashboard').jqGrid
+            ({
+                rowList: [],        // disable page size dropdown
+                pgbuttons: false,     // disable page control like next, back button
+                pgtext: null,         // disable pager text like 'Page 0 of 10'
+                viewrecords: false    // disable current view record text like 'View 1-10 of 100'
+            });
+        $(window).on('resize.jqGrid', function () {
+            $("#jqgrid_dashboard").jqGrid('setGridWidth', $("#gbox_jqgrid_dashboard").parent().width());
+        });
+    }
+    function load_filter_subgrid(subgrid_id, row_id) {
+        var rowData = $("#jqgrid_dashboard").getRowData(row_id);
+        var json = {};
+        json.Token = '@Convert.ToString(Session["Token"])';
+        json.CATEGORY_ID = rowData.ID;
+        $.ajax({
+            async: true,
+            url: g_app_name + '/api/GetReports4Category',
+            type: 'POST',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                if (ShowAlert("Reports list for category", data) == false) {
+                    return;
+                }
+                var subgrid_table_id;
+                subgrid_table_id = json_subgrid.subgrid_id + "_t";
+                jQuery("#" + json_subgrid.subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><table id='pjq_" + subgrid_table_id + "' class='scroll'></table>");
+                jQuery("#" + subgrid_table_id).jqGrid({
+                    data: data.rows,
+                    shrinkToFit: true,
+                    height: 'auto',
+                    autowidth: true,
+                    datatype: "local",
+                    multiselect: false,
+                    pager: '#pjq_' + subgrid_table_id,
+                    colNames: ['ID', 'REPORT NAME', 'CREATED DATE', 'PARAM_COUNT', 'REPORT TYPE', 'ACTION'],
+                    colModel: [
+                        { name: 'ReportGuid', index: 'ReportGuid', hidden: true },
+                        { name: 'ReportName', index: 'ReportName', align: "left", editable: false, width: 100, },
+                        { name: 'CreatedDate', index: 'CreatedDate', align: "center", editable: false, width: 100, },
+                        { name: 'ParamCount', index: 'ParamCount', hidden: true },
+                        { name: 'ReportType', index: 'ReportType', hidden: true },
+                        { name: 'SHOW_REPORT', index: 'SHOW_REPORT', sortable: false, title: false, align: "center", width: 60 },
+                    ],
+                    rowNum: 10,
+                    rowList: [10, 20, 30],
+                    sortorder: "asc",
+                    shrinkToFit: true,
+                    gridComplete: function () {
+                        var ids = jQuery("#" + subgrid_table_id).jqGrid('getDataIDs');
+                        if (ids.length == 0) {
+                        }
+                        for (var i = 0; i < ids.length; i++) {
+                            var im = "";
+                            var ib = "";
+                            var cl = ids[i];
+                            var rows = jQuery("#" + subgrid_table_id).jqGrid('getRowData', cl);
+                            if (data.rows[i].ReportType == '2') {
+                                ib = "<button class='btn btn-xs btn-default' title='Show  Charts' id='show_chart' onclick=\"get_report_chart(" + subgrid_table_id + "," + cl + ");\"> Show Graphs </button>";
+                                jQuery("#" + subgrid_table_id).jqGrid('setRowData', ids[i], {
+                                    SHOW_REPORT: ib
+                                });
+                            }
+                            else
+                            {
+                                im = "<button class='btn btn-xs btn-default' title='Show Report' id='show_report' onclick=\"get_report_parameters(" + subgrid_table_id + "," + cl + ");\"> Show Report </button>";
+                                jQuery("#" + subgrid_table_id).jqGrid('setRowData', ids[i], {
+                                    SHOW_REPORT: im
+                                });
+                            }
+                        }
+                    },
+                });
+                if (data.rows.length < 10) { //hide search and pagination
+                    $('.ui-search-toolbar', $("#" + subgrid_table_id).fhDiv).hide();
+                    $("#pjq_" + subgrid_table_id + "_center").hide();
+                }
+                $(window).on('resize.jqGrid', function () {
+                    $("#" + subgrid_table_id).jqGrid('setGridWidth', $("#gbox_" + subgrid_table_id).parent().width());
+                });
+            },
+            error: function (xhr) { //alert('Error: ' + JSON.stringify(xhr));
+            },
+            processData: false
+        });
+    }
+    function get_report_parameters(subgrid_table_id, row_id) {
+        $('#report_widget').hide();
+        $('#graph_dashboard_div').hide();
+        $('#param_widget_graph').hide();
+        var rows = jQuery(subgrid_table_id).jqGrid('getRowData', row_id);
+        jObject.ReportGuid = rows.ReportGuid;
+        jObject.ParamCount = rows.ParamCount;
+        gReportGuid_graph = rows.ReportGuid;
+        if (jObject.ParamCount == 0) {
+            $('#param_widget').hide();
+            get_report_data();
+            return;
+        }
+        $('#param_header').html("Search Parameters - " + rows.ReportName);
+        var json = {};
+        json.ReportGuid = jObject.ReportGuid;
+        json.Token = '@Convert.ToString(Session["Token"])';
+        $.ajax({
+            async: true,
+            url: g_app_name + '/api/GetReportParam',
+            type: 'POST',
+            data: JSON.stringify(json),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.aResult.retcode == 0) {
+                    $('#param_widget').show();
+                    $('#jqgrid_param').jqGrid('GridUnload');
+                    jQuery("#jqgrid_param").jqGrid({
+                        data: data.rows,
+                        datatype: "local",
+                        height: 'auto',
+                        cellEdit: true,
+                        afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                        },
+                        colNames: ['ID', 'FILTER COLUMN', 'CAPTION', 'OPERATOR', 'CONTROL', 'CONTROL2', 'CONDITION', 'FIELD TYPE', 'VALUE_TEXT', 'PARAM_ORDER', 'MANDATORY'],
+                        colModel: [
+                                    { "name": "id", "index": "id", "align": "center", hidden: true },
+                                    { "name": "filter_column", "index": "filter_column", hidden: true },
+                                    { "name": "filter_caption", "index": "filter_caption", "align": "right", "editable": false },
+                                    { "name": "operator", "index": "operator", "hidden": true },
+                                    {
+                                        "name": "control", "index": "control", "align": "left", "editable": true, "width": 100,
+                                        editoptions:
+                                            {
+                                                dataInit: function (domElem) {
+                                                    if (domElem.type != "checkbox")
+                                                        $(domElem).addClass("jqgrid_ddl");
+                                                     if (domElem.type == "select-one") {
+                                                        $(domElem).append($("<option />")
+                                                        .val('All')
+                                                        .text('Select')
+                                                         .attr('selected', this.select));
+                                                     }
+                                                    if (domElem.type == "text") {
+
+                                                        var json = {};
+                                                        json.Token = '@Convert.ToString(Session["Token"])';
+                                                        json.ParamGuid = domElem.id.substring(0, domElem.id.indexOf('_'));
+                                                        $.ajax({
+                                                            async: true,
+                                                            url: g_app_name + '/api/GetParamType',
+                                                            type: 'POST',
+                                                            contentType: 'application/json; charset=utf-8',
+                                                            data:   JSON.stringify(json),
+                                                            complete: function (data) {
+
+                                                                var Response = JSON.parse(data.responseText);
+
+                                                                if (data.readyState != 4) return;
+                                                                if (Response.ParamType == "date-param") {
+                                                                    var json = {};
+                                                                    json.Token = '@Convert.ToString(Session["Token"])';
+                                                                    json.ParamGuid = domElem.id.substring(0, domElem.id.indexOf('_'));
+                                                                    $.ajax({
+                                                                        url: g_app_name + '/api/GetParamDate',
+                                                                        type: 'POST',
+                                                                        contentType: 'application/json; charset=utf-8',
+                                                                        data:   JSON.stringify(json),
+                                                                        success: function (data) {
+                                                                            $(domElem).val(data);
+                                                                        }
+                                                                    });
+                                                                }
+                                                                if (Response.ParamType == "autocomplete") {
+                                                                    debugger;
+                                                                    $(domElem).autocomplete({
+                                                                        source: function (request, response) {
+                                                                            $.ajax({
+                                                                                url: g_app_name + '/api/GetSearchParamAuto',
+                                                                                dataType: "json",
+                                                                                data: {
+                                                                                    term: request.term,
+                                                                                    paramcolguid: domElem.id.substring(0, domElem.id.indexOf('_')),
+                                                                                    token: '@Convert.ToString(Session["Token"])',
+                                                                                },
+                                                                                success: function (data) {
+                                                                                    response(data);
+                                                                                }
+                                                                            });
+                                                                        },
+                                                                        min_length: 1,
+                                                                        delay: 300
+                                                                    });
+                                                                }
+                                                            },
+                                                            //error: function (xhr) {
+                                                            //    debugger;
+                                                            //},
+                                                            processData: false
+                                                        });
+                                                      }
+                                                    },
+                                                },
+                                        },
+                                        { "name": "control2", "index": "control2", "align": "center", "hidden": true },
+                                        { "name": "condition", "index": "condition", "hidden": true },
+                                        { "name": "field_type", "index": "field_type", "hidden": true },
+                                        { "name": "value_text", "index": "value_text", "hidden": true },
+                                        { "name": "param_order", "index": "param_order", "hidden": true },
+                                        { "name": "mandatory", "index": "mandatory", "hidden": true }
+                            ],
+                            viewrecords: true,
+                            gridview: true,
+                            gridComplete: function () { },
+                            loadComplete: function (data) {
+                                $("#jqgrid_param").jqGrid('setGridWidth', $("#gbox_jqgrid_param").parent().width());
+                                var $this = $(this), ids = $this.jqGrid('getDataIDs'), i, l = ids.length;
+                                cm = $this.jqGrid("getColProp", "control");
+                                for (i = 0; i < ids.length; i++) {
+                                    item = data.rows[i];
+                                    cm.edittype = item['control'];
+                                    cm.name = i.toString() + '_control';
+                                    cm.id = i.toString() + '_control';
+                                    cm.date_name = item['control'];
+                                    var new_data_value_auto = [];
+                                    if (item['control'] == "text") {
+                                        $this.jqGrid('editRow', ids[i], true);
+                                        $('#' + ids[i] + '_' + cm.id).val('');
+                                    }
+                                    if (item['control'] == "autocomplete") {
+                                        cm.edittype = "text";
+                                        try
+                                        {
+                                            $this.jqGrid('editRow', ids[i], true);
+                                            $('#' + ids[i] + '_' + cm.id).val('');
+                                        }catch(err)
+                                        {
+                                        }
+                                    }
+                                    if (item['control'] == "NA") {
+                                        $this.jqGrid('editRow', ids[i], true);
+                                        $('#' + ids[i] + '_' + cm.id).val('');
+                                    }
+                                    if (item['control'] == "select") {
+                                        try
+                                        {
+                                            var aObject = {
+                                                Token: json.Token,
+                                                Id: item.id,
+                                            }
+                                            var objStr = JSON.stringify(aObject);
+                                            var escapedObjStr = encodeURIComponent(objStr);
+                                            cm.editoptions["dataUrl"] = g_app_name + "/api/GetParamDdl?JSONString=" + escapedObjStr;
+                                            //cm.editoptions["dataUrl"] = g_app_name + "/api/GetParamDdl?Token=" + json.Token + "&ID=" + item.id;
+                                            $this.jqGrid('editRow', ids[i], true);
+                                        }catch(exception)
+                                        {
+                                        }
+                                    }
+                                    if (item['control'] == "select-param") {
+                                        try {
+
+                                            var aObject = {
+                                                Token: json.Token,
+                                                Id: item.id,
+                                                Value : '@Convert.ToString(Session["DIV_CODE"])'
+                                            }
+                                            var objStr = JSON.stringify(aObject);
+                                            var escapedObjStr = encodeURIComponent(objStr);
+                                            cm.edittype = "select";
+                                            cm.editoptions["dataUrl"] = g_app_name + "/api/GetDropDownWithParamValue?JSONString=" + escapedObjStr;
+                                            $this.jqGrid('editRow', ids[i], true);
+                                        } catch (exception) {
+                                        }
+                                    }
+                                    if (item['control'] == "date-param") {
+                                        cm.edittype = "text";
+                                        $this.jqGrid('editRow', ids[i], true);
+                                        $('#' + ids[i] + '_' + cm.id).val('');
+                                        $('#' + ids[i] + '_' + cm.id).datepicker();
+                                    }
+                                    if (item['control'] == "date") {
+                                           cm.edittype = "text";
+                                           $this.jqGrid('editRow', ids[i], true);
+                                           $('#' + ids[i] + '_' + cm.id).val('');
+                                           $('#' + ids[i] + '_' + cm.id).datepicker();
+                                    }
+                                    if (item['control'] == "datetime")
+                                    {
+                                        cm.edittype = "text";
+                                        $this.jqGrid('editRow', ids[i], true);
+                                        $('#' + ids[i] + '_' + cm.id).val('');
+                                        $('#' + ids[i] + '_' + cm.id).datepicker();
+                                    }
+                                    if (item['control'] == "checkbox") {
+                                        $this.jqGrid('editRow', ids[i], true);
+                                    }
+                                }
+                            },
+                            caption: "",
+                            multiselect: false,
+                            autowidth: true,
+                        });
+                        $('#jqgrid_param').jqGrid
+                            ({
+                                rowList: [],        // disable page size dropdown
+                                pgbuttons: false,     // disable page control like next, back button
+                                pgtext: null,         // disable pager text like 'Page 0 of 10'
+                                viewrecords: false    // disable current view record text like 'View 1-10 of 100'
+                            });
+                        $('.ui-jqgrid-hdiv').hide();
+                        $('#jqgrid_param').removeClass(".ui-jqgrid-border").addClass(".ui-jqgrid-border");
+                        $(window).on('resize.jqGrid', function () {
+                            $("#jqgrid_param").jqGrid('setGridWidth', $("#gbox_jqgrid_param").parent().width());
+                        });
+                    }
+                    else {
+                        $('#param_widget').hide();
+                    }
+                },
+                error: function (xhr) {//alert('Error: ' + JSON.stringify(xhr));
+                },
+                processData: false
+            });
+        }
+       function colAutoComplete(elem) {
+        $(elem).autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    source: g_app_name + '/api/GetRPNameAuto',
+                    dataType: "json",
+                    data: {
+                       // term: request.term,
+                       // col_type:rowSubgrid.FIELD_TYPE,
+                       // table_name: rowData.NAME,
+                       // database_name :  $("#database_names option:selected").text(),
+                        //col_name: rowSubgrid.FILTER_COLUMN
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+        min_length: 1,
+        delay: 300
+        });
+  }
+       function get_report_chart(subgrid_table_id, row_id) {
+           $('#report_widget').hide();
+           $('#param_widget').hide();
+           $('#graph_dashboard_div').hide();
+           $('#param_widget_graph').show();
+           var rows = jQuery(subgrid_table_id).jqGrid('getRowData', row_id);
+           jObject.ReportGuid = rows.ReportGuid;
+           jObject.ParamCount = rows.ParamCount;
+           gReportGuid_graph = rows.ReportGuid;
+           $('#param_header_graph').html("Search Parameters - " + rows.ReportName);
+           var json = {};
+           json.ReportGuid = jObject.ReportGuid;
+           json.Token = '@Convert.ToString(Session["Token"])';
+           $.ajax({
+               async: true,
+               url: g_app_name + '/api/GetReportParam',
+               type: 'POST',
+               data: JSON.stringify(json),
+               dataType: 'json',
+               contentType: 'application/json; charset=utf-8',
+               success: function (data) {
+                   if (data.aResult.retcode == 0) {
+                       $('#param_widget_graph').show();
+                       $('#jqgrid_param_graph').jqGrid('GridUnload');
+                       jQuery("#jqgrid_param_graph").jqGrid({
+                           data: data.rows,
+                           datatype: "local",
+                           height: 'auto',
+                           cellEdit: true,
+                           afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                           },
+                           colNames: ['ID', 'FILTER COLUMN', 'CAPTION', 'OPERATOR', 'CONTROL', 'CONTROL2', 'CONDITION', 'FIELD TYPE', 'VALUE_TEXT', 'PARAM_ORDER', 'MANDATORY'],
+                           colModel: [
+                                       { "name": "id", "index": "id", "align": "center", hidden: true },
+                                       { "name": "filter_column", "index": "filter_column", hidden: true },
+                                       { "name": "filter_caption", "index": "filter_caption", "align": "right", "editable": false },
+                                       { "name": "operator", "index": "operator", "hidden": true },
+                                       {
+                                           "name": "control", "index": "control", "align": "left", "editable": true, "width": 100,
+                                              editoptions:
+                                            {
+                                                dataInit: function (domElem) {
+                                                    if (domElem.type != "checkbox")
+                                                        $(domElem).addClass("jqgrid_ddl");
+                                                    //if (domElem.type == "select-one") {
+                                                    //    $(domElem).append($("<option />")
+                                                    //    .val('')
+                                                    //    .text('Select')
+                                                    //    .attr('selected', this.select));
+                                                    //}
+                                                    if (domElem.type == "text") {
+
+                                                        var json = {};
+                                                        json.Token = '@Convert.ToString(Session["Token"])';
+                                                        json.ParamGuid = domElem.id.substring(0, domElem.id.indexOf('_'));
+                                                        $.ajax({
+                                                            async: true,
+                                                            url: g_app_name + '/api/GetParamType',
+                                                            type: 'POST',
+                                                            contentType: 'application/json; charset=utf-8',
+                                                            data:   JSON.stringify(json),
+                                                            complete: function (data) {
+
+                                                                var Response = JSON.parse(data.responseText);
+
+                                                                if (data.readyState != 4) return;
+                                                                if (Response.ParamType == "date-param") {
+                                                                    var json = {};
+                                                                    json.Token = '@Convert.ToString(Session["Token"])';
+                                                                    json.ParamGuid = domElem.id.substring(0, domElem.id.indexOf('_'));
+                                                                    $.ajax({
+                                                                        url: g_app_name + '/api/GetParamDate',
+                                                                        type: 'POST',
+                                                                        contentType: 'application/json; charset=utf-8',
+                                                                        data:   JSON.stringify(json),
+                                                                        success: function (data) {
+                                                                            $(domElem).val(data);
+                                                                        }
+                                                                    });
+                                                                }
+                                                                if (Response.ParamType == "autocomplete") {
+                                                                    debugger;
+                                                                    $(domElem).autocomplete({
+                                                                        source: function (request, response) {
+                                                                            $.ajax({
+                                                                                url: g_app_name + '/api/GetSearchParamAuto',
+                                                                                dataType: "json",
+                                                                                data: {
+                                                                                    term: request.term,
+                                                                                    paramcolguid: domElem.id.substring(0, domElem.id.indexOf('_')),
+                                                                                    token: '@Convert.ToString(Session["Token"])',
+                                                                                },
+                                                                                success: function (data) {
+                                                                                    response(data);
+                                                                                }
+                                                                            });
+                                                                        },
+                                                                        min_length: 1,
+                                                                        delay: 300
+                                                                    });
+                                                                }
+                                                            },
+                                                            //error: function (xhr) {
+                                                            //    debugger;
+                                                            //},
+                                                            processData: false
+                                                        });
+                                                      }
+                                                    },
+                                                },
+                                       },
+                                           { "name": "control2", "index": "control2", "align": "center", "hidden": true },
+                                           { "name": "condition", "index": "condition", "hidden": true },
+                                           { "name": "field_type", "index": "field_type", "hidden": true },
+                                           { "name": "value_text", "index": "value_text", "hidden": true },
+                                           { "name": "param_order", "index": "param_order", "hidden": true },
+                                           { "name": "mandatory", "index": "mandatory", "hidden": true }
+                           ],
+                           viewrecords: true,
+                           gridview: true,
+                           gridComplete: function () { },
+                           loadComplete: function (data) {
+                               $("#jqgrid_param_graph").jqGrid('setGridWidth', $("#gbox_jqgrid_param_graph").parent().width());
+                               var $this = $(this), ids = $this.jqGrid('getDataIDs'), i, l = ids.length;
+                               cm = $this.jqGrid("getColProp", "control");
+                               for (i = 0; i < ids.length; i++) {
+                                   item = data.rows[i];
+                                   cm.edittype = item['control'];
+                                   cm.name = i.toString() + '_control';
+                                   cm.id = i.toString() + '_control';
+                                   cm.date_name = item['control'];
+                                   var new_data_value_auto = [];
+                                   if (item['control'] == "text") {
+                                       $this.jqGrid('editRow', ids[i], true);
+                                       $('#' + ids[i] + '_' + cm.id).val('');
+                                   }
+                                   if (item['control'] == "autocomplete") {
+                                       cm.edittype = "text";
+                                       try {
+                                           $this.jqGrid('editRow', ids[i], true);
+                                           $('#' + ids[i] + '_' + cm.id).val('');
+                                       } catch (err) {
+                                       }
+                                   }
+                                   if (item['control'] == "NA") {
+                                       $this.jqGrid('editRow', ids[i], true);
+                                       $('#' + ids[i] + '_' + cm.id).val('');
+                                   }
+                                   if (item['control'] == "select") {
+                                       try {
+                                           var aObject = {
+                                               Token: json.Token,
+                                               Id: item.id,
+                                           }
+                                           var objStr = JSON.stringify(aObject);
+                                           var escapedObjStr = encodeURIComponent(objStr);
+                                           cm.editoptions["dataUrl"] = g_app_name + "/api/GetParamDdl?JSONString=" + escapedObjStr;
+                                           //cm.editoptions["dataUrl"] = g_app_name + "/api/GetParamDdl?Token=" + json.Token + "&ID=" + item.id;
+                                           $this.jqGrid('editRow', ids[i], true);
+                                       } catch (exception) {
+                                       }
+                                   }
+                                   if (item['control'] == "select-param") {
+                                       try {
+
+                                           var aObject = {
+                                               Token: json.Token,
+                                               Id: item.id,
+                                               Value: '@Convert.ToString(Session["DIV_CODE"])'
+                                           }
+                                           var objStr = JSON.stringify(aObject);
+                                           var escapedObjStr = encodeURIComponent(objStr);
+                                           cm.edittype = "select";
+                                           cm.editoptions["dataUrl"] = g_app_name + "/api/GetDropDownWithParamValue?JSONString=" + escapedObjStr;
+                                           $this.jqGrid('editRow', ids[i], true);
+                                       } catch (exception) {
+                                       }
+                                   }
+                                   if (item['control'] == "date") {
+                                       cm.edittype = "text";
+                                       $this.jqGrid('editRow', ids[i], true);
+                                       $('#' + ids[i] + '_' + cm.id).val('');
+                                       $('#' + ids[i] + '_' + cm.id).datepicker();
+                                   }
+                                   if (item['control'] == "datetime") {
+                                       cm.edittype = "text";
+                                       $this.jqGrid('editRow', ids[i], true);
+                                       $('#' + ids[i] + '_' + cm.id).val('');
+                                       $('#' + ids[i] + '_' + cm.id).datepicker();
+                                   }
+                                   if (item['control'] == "checkbox") {
+                                       $this.jqGrid('editRow', ids[i], true);
+                                   }
+                               }
+                           },
+                           caption: "",
+                           multiselect: false,
+                           autowidth: true,
+                       });
+                       $('#jqgrid_param_graph').jqGrid
+                           ({
+                               rowList: [],        // disable page size dropdown
+                               pgbuttons: false,     // disable page control like next, back button
+                               pgtext: null,         // disable pager text like 'Page 0 of 10'
+                               viewrecords: false    // disable current view record text like 'View 1-10 of 100'
+                           });
+                       $('.ui-jqgrid-hdiv').hide();
+                       $('#jqgrid_param_graph').removeClass(".ui-jqgrid-border").addClass(".ui-jqgrid-border");
+                       $(window).on('resize.jqGrid', function () {
+                           $("#jqgrid_param_graph").jqGrid('setGridWidth', $("#gbox_jqgrid_param_graph").parent().width());
+                       });
+                   }
+                   else {
+                       $('#param_widget_graph').hide();
+                   }
+               },
+               error: function (xhr) {//alert('Error: ' + JSON.stringify(xhr));
+               },
+               processData: false
+           });
+       }
+    </script>

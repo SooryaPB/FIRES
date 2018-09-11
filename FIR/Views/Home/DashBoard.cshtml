@@ -1,0 +1,15 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+<div>&nbsp;</div>
+ <script >
+     $(document).ready(function () {
+         pageHeading("Report Dashboard"); 
+         setInterval(GetClock, 1000);
+         GetClock();
+         $('#ribbon_username').text('Logged In As : @Convert.ToString(Session["USERID"])');
+         loadContent("/Home/DashView");
+     });
+</script>
+
+ 
